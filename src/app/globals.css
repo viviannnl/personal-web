@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
 body {
-    background-image: radial-gradient(circle at top left, #ded9ab, #000000 17%);
+    background-image: url('/bedroom-inspo2.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    /* background-image: radial-gradient(circle at top left, #ded9ab, #000000 17%); */
 }
