@@ -17,6 +17,7 @@ export default function Home() {
       </div>
       {/* Falling items (should have higher z-index via their own CSS) */}
       <FallingItem />
+      <FallingPixelArtsGSAP />
     </div>
   );
 }
