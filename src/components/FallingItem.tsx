@@ -45,7 +45,11 @@ const FallingItem = () => {
         >
           <Image src="/board.png" alt="Board Icon" width={300} height={300} />
         </div>
-        <div className="window transform transition duration-300 hover:scale-110 hover:shadow-lg hover:brightness-110">
+        <div 
+          className="window transform transition duration-300 hover:scale-110 hover:shadow-lg hover:brightness-110"
+          onClick={() => router.push('/blog')}
+          style={{ cursor: 'pointer' }}
+        >
             <Image src="/window.png" alt="Window Icon" width={300} height={300} />
         </div>
       </div>

@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { supabase } from '../../utils/supabase'; // adjust path as needed
 
 type QA = {
@@ -44,13 +45,20 @@ export default function QAPage() {
     setLoading(false);
   };
 
+  const router = useRouter();
+
   return (
     <div className="flex min-h-screen relative bg-transparent">
       {/* Light element in the top left (optional) */}
       <div className="absolute left-0 top-0 z-20">
-        <div className="light transform transition duration-300 hover:scale-110 hover:shadow-lg hover:brightness-110">
-          <Image src="/light.gif" alt="Light Icon" width={200} height={200} />
-        </div>
+        <button
+          type="button"
+          onClick={() => router.push('/')}
+          className="light transform transition duration-300 hover:scale-110 hover:shadow-lg hover:brightness-110 focus:outline-none"
+          style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
+        >
+          <Image src="/light.gif" alt="Light Icon" width={450} height={450} />
+        </button>
       </div>
       {/* Board image on the left */}
       <div className="flex flex-col items-center justify-center p-8 shadow-lg z-10">
