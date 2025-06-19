@@ -26,10 +26,9 @@ export default function PodcastPage() {
       <div className="flex-1 p-8 flex flex-col items-center justify-center">
         <h1 className="text-3xl font-bold mb-6">Podcast Series</h1>
         <div className="w-full max-w-2xl">
-          {/* Replace the src below with your actual Spotify embed link */}
           <iframe 
             src="https://open.spotify.com/embed/show/3r8xcegBmUhJnSJ4W91GFN?utm_source=generator" 
-            width="100%" height="352" frameBorder="0"  
+            width="100%" height="352" 
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
             loading="lazy">
           </iframe>
