@@ -1,22 +1,34 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { gsap } from 'gsap';
 import Image from 'next/image';
 import styles from './FallingItem.module.css';
 
 const FallingItem = () => {
+  const pathname = usePathname();
+
   useEffect(() => {
-    gsap.from(".fall-item", {
-      y: 100-window.innerHeight,
-      opacity: 0,
-      duration: 1.5,
-      stagger: 0.3,
-      ease: "bounce.out",
-      rotation: 10,
-    });
-  }, []);
+    if (pathname === "/") {
+      // Reset the elements to their initial state
+      gsap.set(".fall-item", {
+        y: 100 - window.innerHeight,
+        opacity: 0,
+        rotation: 10,
+      });
+
+      // Then animate them in
+      gsap.to(".fall-item", {
+        y: 0,
+        opacity: 1,
+        duration: 1.5,
+        stagger: 0.3,
+        ease: "bounce.out",
+        rotation: 0,
+      });
+    }
+  }, [pathname]);
 
   const router = useRouter();
 
@@ -33,7 +45,12 @@ const FallingItem = () => {
             <Image src="/window.png" alt="Window Icon" width={300} height={300} />
         </div>
       </div>
-      <div className={`fall-item ${styles.fallItem} ${styles.mic}`} id='mic'>
+      <div
+        className={`fall-item ${styles.fallItem} ${styles.mic}`}
+        id='mic'
+        onClick={() => router.push('/podcast')}
+        style={{ cursor: 'pointer' }}
+      >
         <Image src="/mic.png" alt="Mic Icon" width={200} height={200} />
       </div>
       <div 
@@ -49,7 +66,12 @@ const FallingItem = () => {
       <div className={`fall-item ${styles.fallItem} ${styles.badmintonRacket}`} id='badminton_racket'>
         <Image src="/badminton_racket.png" alt="Badminton Racket Icon" width={300} height={300} />
       </div>
-      <div className={`fall-item ${styles.fallItem} ${styles.laptop}`} id='laptop'>
+      <div
+        className={`fall-item ${styles.fallItem} ${styles.laptop}`}
+        id='laptop'
+        onClick={() => window.open('https://github.com/viviannnl', '_blank')}
+        style={{ cursor: 'pointer' }}
+      >
         <Image src="/laptop.png" alt="Laptop Icon" width={350} height={350} />
       </div>
     </div>
