@@ -3,7 +3,7 @@ import FallingItem from '../components/FallingItem';
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen w-full">
+    <div className="relative min-h-screen w-full overflow-hidden">
       {/* Centered content behind falling items */}
       <div className="absolute inset-0 flex items-center justify-center z-0">
         <div className="rounded-xl shadow-lg p-10 max-w-xl text-center">
