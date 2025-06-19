@@ -1,5 +1,5 @@
 @import "tailwindcss";
 
-.fall-item {
-    position: absolute;
+body {
+    background-image: radial-gradient(circle at top left, #ded9ab, #000000 17%);
 }
