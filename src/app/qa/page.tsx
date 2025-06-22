@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '../../utils/supabase';
@@ -46,64 +45,61 @@ export default function QAPage() {
     setLoading(false);
   };
 
+  console.log(qas);
+
   const router = useRouter();
 
   return (
-    <div className="flex min-h-screen relative bg-transparent">
-      {/* Board image on the left */}
-      <div className="flex flex-col items-center justify-center p-8 shadow-lg z-10">
-        <Image src="/board.png" alt="Board Icon" width={300} height={300} />
-      </div>
-      {/* Pixel Q&A board on the right */}
-      <div className="flex-1 p-8 flex flex-col items-center justify-center">
-        <div
-          className="bg-yellow-200 border-4 border-black rounded-none shadow-lg p-8 max-w-2xl w-full"
-          style={{
-            boxShadow: '8px 8px 0 #222, 0 0 0 4px #fff',
-            fontFamily: "'Press Start 2P', cursive",
-            imageRendering: 'pixelated',
-          }}
+    <div className="min-h-screen bg-[#1a1229] text-gray-200 overflow-x-hidden">
+      <main className="container mx-auto px-4 pt-24 pb-16 text-center">
+        <h1
+          className="text-5xl font-serif font-bold text-[#f8e2a8] mb-16"
+          style={{ textShadow: '0 0 15px rgba(248, 226, 168, 0.4)' }}
         >
-          <h1 className="text-2xl md:text-3xl mb-8 text-center video-game-font" style={{ fontFamily: "'Press Start 2P', cursive" }}>
-            Q&amp;A
-          </h1>
-          {/* Question form */}
-          <form onSubmit={handleSubmit} className="mb-8 flex flex-col items-center">
-            <input
-              type="text"
-              value={content}
-              onChange={e => setContent(e.target.value)}
-              placeholder="Ask a question..."
-              className="video-game-font border-2 border-black rounded-none px-4 py-2 mb-2 w-full"
-              style={{ fontFamily: "'Press Start 2P', cursive" }}
-              disabled={loading}
-            />
-            <button
-              type="submit"
-              className="video-game-font bg-black text-yellow-200 px-6 py-2 border-2 border-black rounded-none"
-              style={{ fontFamily: "'Press Start 2P', cursive" }}
-              disabled={loading}
+          Ask Me Anything
+        </h1>
+
+        {/* Question form */}
+        <form
+          onSubmit={handleSubmit}
+          className="mb-12 max-w-2xl mx-auto flex flex-col items-center"
+        >
+          <textarea
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            placeholder="Type your question here..."
+            className="w-full bg-slate-900/40 border border-white/10 rounded-lg px-4 py-3 font-serif text-lg text-[#f8e2a8] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#f8e2a8]/50 transition-shadow duration-300"
+            rows={3}
+            disabled={loading}
+          />
+          <button
+            type="submit"
+            className="mt-4 px-8 py-3 bg-[#f8e2a8] text-[#1a1229] font-bold font-serif rounded-lg transition-transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={loading}
+          >
+            {loading ? 'Submitting...' : 'Ask Question'}
+          </button>
+        </form>
+
+        {/* Q&A list */}
+        <div className="space-y-6 max-w-4xl mx-auto">
+          {qas.map((qa, idx) => (
+            <div
+              key={qa.id}
+              className="bg-slate-900/40 rounded-lg shadow-lg p-6 text-left ring-1 ring-white/10"
             >
-              {loading ? 'Submitting...' : 'Ask'}
-            </button>
-          </form>
-          {/* Q&A list */}
-          <div className="space-y-8">
-            {qas.map(qa => (
-              <div key={qa.id}>
-                <h2 className="text-lg md:text-xl mb-2 video-game-font" style={{ fontFamily: "'Press Start 2P', cursive" }}>
-                  Q: {qa.content}
-                </h2>
-                {qa.answer && (
-                  <p className="video-game-font" style={{ fontFamily: "'Press Start 2P', cursive" }}>
-                    A: {qa.answer}
-                  </p>
-                )}
-              </div>
-            ))}
-          </div>
+              <h2 className="text-xl font-serif font-semibold text-[#f8e2a8] mb-2">
+                Q: {qa.content}
+              </h2>
+              {qa.answer && (
+                <p className="font-serif text-gray-300 leading-relaxed">
+                  A: {qa.answer}
+                </p>
+              )}
+            </div>
+          ))}
         </div>
-      </div>
+      </main>
       <FloatingHomeButton />
     </div>
   );
