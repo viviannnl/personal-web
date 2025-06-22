@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 body {
-    background-image: url('/bedroom-inspo2.jpeg');
+    background-image: url('/bedroom.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
