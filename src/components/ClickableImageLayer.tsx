@@ -1,23 +1,35 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+
+interface AnimationOptions {
+  type?: 'fadeIn';
+  duration?: number;
+  delay?: number;
+}
 
 interface ClickableImageLayerProps {
   src: string;
   zIndex: number;
   setCanvasRef: (el: HTMLCanvasElement | null) => void;
+  animation?: AnimationOptions;
+  hoverEffect?: boolean;
 }
 
 const ClickableImageLayer: React.FC<ClickableImageLayerProps> = ({
   src,
   zIndex,
   setCanvasRef,
+  animation,
+  hoverEffect,
 }) => {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
   useEffect(() => {
     const img = new Image();
     img.src = src;
     img.crossOrigin = 'anonymous';
 
     img.onload = () => {
-      const canvas = document.querySelector(`canvas[data-src="${src}"]`) as HTMLCanvasElement;
+      const canvas = canvasRef.current;
       if (!canvas) return;
 
       const ctx = canvas.getContext('2d');
@@ -41,10 +53,27 @@ const ClickableImageLayer: React.FC<ClickableImageLayerProps> = ({
     };
   }, [src]);
 
+  const fadeClass =
+    animation?.type === 'fadeIn' ? 'opacity-0 animate-fade-in' : '';
+
+  const hoverClass = hoverEffect
+    ? 'transition duration-300 ease-in-out hover:scale-110 hover:brightness-110'
+    : '';
+
+  const style: React.CSSProperties = {
+    animationDuration: animation?.duration ? `${animation.duration}ms` : '800ms',
+    animationDelay: animation?.delay ? `${animation.delay}ms` : '0ms',
+    animationFillMode: 'forwards',
+  };
+
   return (
     <canvas
-      ref={setCanvasRef}
+      ref={(el) => {
+        canvasRef.current = el;
+        setCanvasRef(el);
+      }}
       data-src={src}
+      className={`${fadeClass} ${hoverClass}`}
       style={{
         position: 'absolute',
         top: 0,
@@ -53,6 +82,7 @@ const ClickableImageLayer: React.FC<ClickableImageLayerProps> = ({
         height: '100vh',
         zIndex,
         pointerEvents: 'none',
+        ...style,
       }}
     />
   );
