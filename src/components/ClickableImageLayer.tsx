@@ -73,7 +73,7 @@ const ClickableImageLayer: React.FC<ClickableImageLayerProps> = ({
         setCanvasRef(el);
       }}
       data-src={src}
-      className={`${fadeClass} ${hoverClass}`}
+      // className={`${fadeClass} ${hoverClass}`} //not working
       style={{
         position: 'absolute',
         top: 0,
@@ -81,7 +81,7 @@ const ClickableImageLayer: React.FC<ClickableImageLayerProps> = ({
         width: '100vw',
         height: '100vh',
         zIndex,
-        pointerEvents: 'none',
+        pointerEvents: 'auto',
         ...style,
       }}
     />

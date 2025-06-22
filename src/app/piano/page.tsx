@@ -3,6 +3,7 @@
 // src/app/piano/page.tsx
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import FloatingHomeButton from '@/components/FloatingHomeButton';
 
 const videos = [
   { src: "https://www.youtube.com/embed/W2ESzbZUQq0", title: "Childhood Memories" },
@@ -16,17 +17,6 @@ export default function PianoPage() {
 
   return (
     <div className="flex min-h-screen relative">
-      {/* Light element in the top left */}
-      <div className="absolute left-0 top-0 z-20">
-        <button
-          type="button"
-          onClick={() => router.push('/')}
-          className="light transform transition duration-300 hover:scale-110 hover:shadow-lg hover:brightness-110 focus:outline-none"
-          style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
-        >
-          <Image src="/light.gif" alt="Light Icon" width={450} height={450} />
-        </button>
-      </div>
       {/* Piano image on the left */}
       <div className="flex flex-col items-center justify-center p-8 shadow-lg z-10">
         <Image src="/piano.png" alt="Piano Icon" width={400} height={400} />
@@ -70,6 +60,7 @@ export default function PianoPage() {
           </div>
         </div>
       </div>
+      <FloatingHomeButton />
     </div>
   );
 }

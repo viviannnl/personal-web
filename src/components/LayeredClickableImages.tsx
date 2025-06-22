@@ -118,7 +118,7 @@ const LayeredClickableImages: React.FC<LayeredClickableImagesProps> = ({ layers 
             position: 'fixed',
             top: mousePos.y + 12,
             left: mousePos.x + 12,
-            background: 'rgba(0,0,0,0.8)',
+            background: 'rgba(0,0,0,0.85)',
             color: 'white',
             padding: '6px 10px',
             borderRadius: '6px',
@@ -126,11 +126,27 @@ const LayeredClickableImages: React.FC<LayeredClickableImagesProps> = ({ layers 
             pointerEvents: 'none',
             whiteSpace: 'nowrap',
             zIndex: 1000,
+            transform: 'translateY(5px)',
+            opacity: 0,
+            animation: 'fadeInTooltip 200ms ease-out forwards',
           }}
         >
           {hoveredTooltip}
         </div>
       )}
+
+      <style jsx>{`
+        @keyframes fadeInTooltip {
+          from {
+            transform: translateY(5px);
+            opacity: 0;
+          }
+          to {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+      `}</style>
     </div>
   );
 };
