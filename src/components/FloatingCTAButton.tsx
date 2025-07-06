@@ -7,7 +7,7 @@ const FloatingCTAButton: React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [sparkleCount, setSparkleCount] = useState(0);
   const [position, setPosition] = useState({ x: 50, y: 50 });
-  const [velocity, setVelocity] = useState({ x: 2, y: 1.5 });
+  const [velocity, setVelocity] = useState({ x: 8, y: 6 });
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
