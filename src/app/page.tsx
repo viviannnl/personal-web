@@ -1,6 +1,7 @@
 'use client'
 
 import LayeredClickableImages from '@/components/LayeredClickableImages';
+import FloatingCTAButton from '@/components/FloatingCTAButton';
 import { useRouter } from 'next/navigation';
 
 export default function Home() {
@@ -45,6 +46,7 @@ export default function Home() {
           },
         ]}
       />
+      <FloatingCTAButton />
     </div>
   );
 }
