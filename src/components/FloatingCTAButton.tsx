@@ -1,11 +1,14 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Sparkles, ArrowRight, Zap } from 'lucide-react';
 
 const FloatingCTAButton: React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [sparkleCount, setSparkleCount] = useState(0);
+  const [position, setPosition] = useState({ x: 50, y: 50 });
+  const [velocity, setVelocity] = useState({ x: 2, y: 1.5 });
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -14,84 +17,110 @@ const FloatingCTAButton: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    const animationFrame = () => {
+      setPosition(prevPos => {
+        setVelocity(prevVel => {
+          const buttonSize = 80; // Approximate button height
+          const buttonWidth = 280; // Approximate button width
+          
+          let newX = prevPos.x + prevVel.x;
+          let newY = prevPos.y + prevVel.y;
+          let newVelX = prevVel.x;
+          let newVelY = prevVel.y;
+
+          // Bounce off edges
+          if (newX <= 0 || newX >= window.innerWidth - buttonWidth) {
+            newVelX = -newVelX;
+            newX = Math.max(0, Math.min(window.innerWidth - buttonWidth, newX));
+          }
+          
+          if (newY <= 0 || newY >= window.innerHeight - buttonSize) {
+            newVelY = -newVelY;
+            newY = Math.max(0, Math.min(window.innerHeight - buttonSize, newY));
+          }
+
+          return { x: newVelX, y: newVelY };
+        });
+
+        return {
+          x: Math.max(0, Math.min(window.innerWidth - 280, position.x + velocity.x)),
+          y: Math.max(0, Math.min(window.innerHeight - 80, position.y + velocity.y))
+        };
+      });
+    };
+
+    const intervalId = setInterval(animationFrame, 16); // ~60fps
+    return () => clearInterval(intervalId);
+  }, [position.x, position.y, velocity.x, velocity.y]);
+
   const handleClick = () => {
     window.open('https://lettergen.io', '_blank');
   };
 
   return (
     <>
-      <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-[9999]">
-        <button
-          onClick={handleClick}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          className="group relative overflow-hidden bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 text-white font-bold text-lg px-8 py-4 rounded-full shadow-2xl transform transition-all duration-300 hover:scale-110 hover:shadow-3xl animate-bounce-slow cursor-pointer border-2 border-white/20"
-          style={{
-            background: isHovered 
-              ? 'linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3)'
-              : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            backgroundSize: isHovered ? '400% 400%' : '100% 100%',
-            animation: isHovered 
-              ? 'gradientShift 2s ease infinite, bounce-slow 2s ease-in-out infinite, pulse-glow 1.5s ease-in-out infinite'
-              : 'bounce-slow 2s ease-in-out infinite, pulse-glow 1.5s ease-in-out infinite'
-          }}
-        >
-          {/* Sparkle effects */}
-          <div className="absolute inset-0 overflow-hidden rounded-full">
-            {[...Array(6)].map((_, i) => (
-              <Sparkles
-                key={`${sparkleCount}-${i}`}
-                className="absolute w-4 h-4 text-yellow-300 animate-sparkle opacity-0"
-                style={{
-                  left: `${Math.random() * 80 + 10}%`,
-                  top: `${Math.random() * 80 + 10}%`,
-                  animationDelay: `${i * 0.3}s`,
-                  animationDuration: '2s'
-                }}
-              />
-            ))}
-          </div>
-
-          {/* Main content */}
-          <div className="relative flex items-center gap-3 z-10">
-            <Zap className="w-6 h-6 animate-pulse" />
-            <span className="font-extrabold tracking-wide">
-              Generate Letters Now!
-            </span>
-            <ArrowRight 
-              className={`w-6 h-6 transition-transform duration-300 ${
-                isHovered ? 'translate-x-2' : ''
-              }`} 
+      <button
+        ref={buttonRef}
+        onClick={handleClick}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className="group fixed overflow-hidden bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 text-white font-bold text-lg px-8 py-4 rounded-full shadow-2xl transform transition-all duration-300 hover:scale-110 hover:shadow-3xl cursor-pointer border-2 border-white/20 z-[9999]"
+        style={{
+          left: `${position.x}px`,
+          top: `${position.y}px`,
+          background: isHovered 
+            ? 'linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3)'
+            : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          backgroundSize: isHovered ? '400% 400%' : '100% 100%',
+          animation: isHovered 
+            ? 'gradientShift 2s ease infinite, pulse-glow 1.5s ease-in-out infinite'
+            : 'pulse-glow 1.5s ease-in-out infinite'
+        }}
+      >
+        {/* Sparkle effects */}
+        <div className="absolute inset-0 overflow-hidden rounded-full">
+          {[...Array(6)].map((_, i) => (
+            <Sparkles
+              key={`${sparkleCount}-${i}`}
+              className="absolute w-4 h-4 text-yellow-300 animate-sparkle opacity-0"
+              style={{
+                left: `${Math.random() * 80 + 10}%`,
+                top: `${Math.random() * 80 + 10}%`,
+                animationDelay: `${i * 0.3}s`,
+                animationDuration: '2s'
+              }}
             />
-          </div>
-
-          {/* Shine effect */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
-          
-          {/* Ripple effect on hover */}
-          {isHovered && (
-            <div className="absolute inset-0 rounded-full bg-white/20 animate-ping" />
-          )}
-        </button>
-
-        {/* Floating text hint */}
-        <div className="absolute -top-16 left-1/2 transform -translate-x-1/2 text-center">
-          <div className="bg-black/80 text-white px-4 py-2 rounded-lg text-sm font-medium animate-float shadow-lg border border-white/20">
-            ✨ Click me for magic! ✨
-            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full">
-              <div className="w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-black/80"></div>
-            </div>
-          </div>
+          ))}
         </div>
-      </div>
+
+        {/* Main content */}
+        <div className="relative flex items-center gap-3 z-10">
+          <Zap className="w-6 h-6 animate-pulse" />
+          <span className="font-extrabold tracking-wide">
+            Generate Letters Now!
+          </span>
+          <ArrowRight 
+            className={`w-6 h-6 transition-transform duration-300 ${
+              isHovered ? 'translate-x-2' : ''
+            }`} 
+          />
+        </div>
+
+        {/* Shine effect */}
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
+        
+        {/* Ripple effect on hover */}
+        {isHovered && (
+          <div className="absolute inset-0 rounded-full bg-white/20 animate-ping" />
+        )}
+
+        {/* Trail effect */}
+        <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-400/30 to-pink-400/30 blur-xl -z-10 animate-pulse" />
+      </button>
 
       {/* Custom styles */}
       <style jsx>{`
-        @keyframes bounce-slow {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-15px); }
-        }
-        
         @keyframes pulse-glow {
           0%, 100% { 
             box-shadow: 0 0 20px rgba(147, 51, 234, 0.5),
