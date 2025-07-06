@@ -98,7 +98,7 @@ const FloatingCTAButton: React.FC = () => {
         <div className="relative flex items-center gap-3 z-10">
           <Zap className="w-6 h-6 animate-pulse" />
           <span className="font-extrabold tracking-wide">
-            Generate Letters Now!
+            Perfect Your Job Hunt!
           </span>
           <ArrowRight 
             className={`w-6 h-6 transition-transform duration-300 ${
