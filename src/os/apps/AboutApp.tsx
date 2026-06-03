@@ -1,40 +1,13 @@
 "use client";
 
-import { VIV } from "../data";
 import { useOS } from "../OSContext";
+
+const LINKEDIN_URL = "https://www.linkedin.com/in/vivian-lii/";
 
 export default function AboutApp() {
   const { open } = useOS();
   return (
     <div className="about">
-      <div className="about-head">
-        <div>
-          <h2 className="about-name">{VIV.user}</h2>
-          <p className="about-handle mono">
-            {VIV.handle} · {VIV.tagline}
-          </p>
-          <div className="chips">
-            {VIV.tags.map((t) => (
-              <span key={t} className="chip">
-                {t}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
-      <div className="about-bio">
-        {VIV.bio.map((b, i) => (
-          <p key={i}>{b}</p>
-        ))}
-      </div>
-      <div className="facts">
-        {VIV.facts.map((f) => (
-          <div key={f.k} className="fact">
-            <span className="fact-k mono">{f.k}</span>
-            <span className="fact-v">{f.v}</span>
-          </div>
-        ))}
-      </div>
       <div className="about-cta">
         <button className="os-btn" onClick={() => open("builds")}>
           see what I’m building →
@@ -42,6 +15,9 @@ export default function AboutApp() {
         <button className="os-btn ghost" onClick={() => open("ama")}>
           ask me anything
         </button>
+        <a className="os-btn ghost" href={LINKEDIN_URL} target="_blank" rel="noreferrer">
+          LinkedIn ↗
+        </a>
       </div>
     </div>
   );

@@ -142,43 +142,6 @@ export const PROJECTS: Project[] = [
     blurb:
       "this whole desktop. a personal operating system instead of a portfolio. drag stuff around.",
   },
-  {
-    name: "VivOS prototype",
-    status: "archived",
-    live: true,
-    url: "/vivos-prototype/index.html",
-    accent: "sky",
-    blurb:
-      "the original HTML prototype and design source for this desktop — preserved as a browsable artifact.",
-  },
-  {
-    name: "VivOS handoff.md",
-    status: "notes",
-    live: true,
-    url: "/vivos-prototype/HANDOFF.md",
-    accent: "amber",
-    blurb:
-      "the markdown implementation handoff that mapped the prototype into the Next.js personal site.",
-  },
-  {
-    name: "蒙特利尔长舌妇",
-    status: "on air",
-    live: true,
-    url: "#",
-    accent: "amber",
-    open: "podcast",
-    blurb:
-      "a Mandarin podcast with friends. gossip, life abroad, us cackling at our own jokes.",
-  },
-  {
-    name: "[ next experiment ]",
-    status: "incubating",
-    live: false,
-    url: "#",
-    accent: "sky",
-    blurb:
-      "whatever becomes possible that wasn’t last month. bias toward shipping, comfy being wrong.",
-  },
 ];
 
 export type CommandKind =
