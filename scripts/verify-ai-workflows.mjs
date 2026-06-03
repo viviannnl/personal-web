@@ -3,7 +3,6 @@ import path from "node:path";
 
 const root = process.cwd();
 const requiredFiles = [
-  "docs/ai-workflows/code-change-workflow.md",
   "public/ai-workflows/code-change-workflow-presentation.html",
   "src/os/apps/ShareDocsApp.tsx",
 ];
@@ -17,6 +16,11 @@ for (const file of requiredFiles) {
   if (stat.size < 1000) {
     throw new Error(`AI workflow share file looks too small: ${file} (${stat.size} bytes)`);
   }
+}
+
+const removedPersonalWebDoc = path.join(root, "docs/ai-workflows/code-change-workflow.md");
+if (fs.existsSync(removedPersonalWebDoc)) {
+  throw new Error("Code Change Workflow markdown should live in viviannnl/ai-workflows, not personal-web");
 }
 
 const data = fs.readFileSync(path.join(root, "src/os/data.ts"), "utf8");
@@ -43,11 +47,17 @@ for (const expected of [
 const app = fs.readFileSync(path.join(root, "src/os/apps/ShareDocsApp.tsx"), "utf8");
 for (const expected of [
   "/ai-workflows/code-change-workflow-presentation.html",
-  "https://github.com/viviannnl/personal-web/blob/redesign/vivos-ui-refresh/docs/ai-workflows/code-change-workflow.md",
+  "https://github.com/viviannnl/ai-workflows/blob/main/code-change-workflow.md",
 ]) {
   if (!app.includes(expected)) {
     throw new Error(`ShareDocsApp.tsx is missing ${expected}`);
   }
+}
+
+const oldPersonalWebMarkdownUrl =
+  "https://github.com/viviannnl/personal-web/blob/redesign/vivos-ui-refresh/docs/ai-workflows/code-change-workflow.md";
+if (app.includes(oldPersonalWebMarkdownUrl)) {
+  throw new Error("ShareDocsApp.tsx still links to the old personal-web markdown URL");
 }
 
 const html = fs.readFileSync(
@@ -56,11 +66,6 @@ const html = fs.readFileSync(
 );
 if (!html.includes("Code Change Workflow") || !html.includes("Verification")) {
   throw new Error("Presentation HTML does not look like the code-change workflow artifact");
-}
-
-const markdown = fs.readFileSync(path.join(root, "docs/ai-workflows/code-change-workflow.md"), "utf8");
-if (!markdown.includes("# Code Change Workflow") || !markdown.includes("Required Workflow")) {
-  throw new Error("Markdown doc does not look like the code-change workflow artifact");
 }
 
 console.log("AI workflow share artifacts verified");

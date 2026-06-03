@@ -12,7 +12,7 @@ const SHARE_DOCS = [
       },
       {
         label: "github markdown ↗",
-        href: "https://github.com/viviannnl/personal-web/blob/redesign/vivos-ui-refresh/docs/ai-workflows/code-change-workflow.md",
+        href: "https://github.com/viviannnl/ai-workflows/blob/main/code-change-workflow.md",
       },
     ],
   },
