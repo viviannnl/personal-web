@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { VIV } from "../data";
 import { useOS } from "../OSContext";
 
@@ -9,13 +8,6 @@ export default function AboutApp() {
   return (
     <div className="about">
       <div className="about-head">
-        <Image
-          className="about-av"
-          src="/avatar.png"
-          alt="Vivian"
-          width={88}
-          height={88}
-        />
         <div>
           <h2 className="about-name">{VIV.user}</h2>
           <p className="about-handle mono">
