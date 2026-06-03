@@ -8,6 +8,11 @@ export default function AboutApp() {
   const { open } = useOS();
   return (
     <div className="about">
+      <div className="about-welcome">
+        <h2>Vivian Li</h2>
+        <p className="about-chinese">李怡然</p>
+        <p className="about-note">heyy, welcome to VivOS — have fun</p>
+      </div>
       <div className="about-cta">
         <button className="os-btn" onClick={() => open("builds")}>
           see what I’m building →

@@ -39,9 +39,15 @@ if (!about.includes("https://www.linkedin.com/in/vivian-lii/")) {
   throw new Error("about.me is missing Vivian's LinkedIn link");
 }
 
-for (const label of ["see what I’m building →", "ask me anything"]) {
+for (const label of [
+  "Vivian Li",
+  "李怡然",
+  "heyy, welcome to VivOS — have fun",
+  "see what I’m building →",
+  "ask me anything",
+]) {
   if (!about.includes(label)) {
-    throw new Error(`about.me is missing expected button: ${label}`);
+    throw new Error(`about.me is missing expected text/button: ${label}`);
   }
 }
 

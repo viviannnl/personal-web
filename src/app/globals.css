@@ -179,17 +179,10 @@ html.night .sticky { color: #2a2208; }
 .lnk.muted { color: var(--ink-mute); cursor: default; }
 
 /* about */
-.about-head { display: flex; gap: 16px; align-items: center; margin-bottom: 18px; }
-.about-name { font-family: var(--font-display), sans-serif; font-weight: 800; font-size: 28px; margin: 0; letter-spacing: -.02em; }
-.about-handle { font-size: 12.5px; color: var(--ink-mute); margin: 3px 0 8px; }
-.chips { line-height: 1.2; }
-.about-bio { border-left: 3px solid var(--accent); padding-left: 16px; margin: 0 0 18px; }
-.about-bio p { margin: 0 0 10px; font-size: 16px; line-height: 1.55; color: var(--ink-soft); }
-.about-bio p:first-child { font-family: var(--font-display), sans-serif; font-weight: 600; font-size: 18px; color: var(--ink); }
-.facts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
-.fact { background: var(--canvas2); border: 1px solid var(--line-soft); border-radius: 10px; padding: 9px 12px; }
-.fact-k { display: block; font-size: 10.5px; text-transform: uppercase; letter-spacing: .1em; color: var(--accent); margin-bottom: 2px; }
-.fact-v { font-size: 13.5px; color: var(--ink-soft); line-height: 1.35; }
+.about-welcome { margin: 0 0 18px; }
+.about-welcome h2 { font-family: var(--font-display), sans-serif; font-weight: 800; font-size: 30px; margin: 0; letter-spacing: -.02em; }
+.about-chinese { margin: 4px 0 10px; font-size: 18px; color: var(--accent); font-weight: 650; }
+.about-note { margin: 0; font-size: 16px; line-height: 1.5; color: var(--ink-soft); }
 .about-cta { display: flex; gap: 10px; flex-wrap: wrap; }
 
 /* ama */
