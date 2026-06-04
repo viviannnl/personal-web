@@ -87,6 +87,9 @@ export default function AmaApp() {
     <div className="ama">
       <div className="ama-feed">
         <div className="ama-day mono">— ask me anything —</div>
+        <div className="ama-state mono">
+          ask me anything — vivian-ish bot replies first, real vivian may answer later
+        </div>
 
         {state === "loading" && (
           <div className="ama-state mono">loading the wall…</div>

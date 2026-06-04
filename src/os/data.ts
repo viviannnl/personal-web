@@ -9,6 +9,7 @@ export type AppId =
   | "podcast"
   | "yap"
   | "builds"
+  | "share-docs"
   | "picks"
   | "terminal"
   | "settings";
@@ -65,6 +66,7 @@ export const APPS: AppDef[] = [
   { id: "podcast", name: "podcast.fm", icon: "🎙️", accent: "amber", w: 460, h: 600 },
   { id: "yap", name: "yap.txt", icon: "📝", accent: "matcha", w: 540, h: 520 },
   { id: "builds", name: "builds", icon: "🛠️", accent: "purple", w: 600, h: 480 },
+  { id: "share-docs", name: "share.doc", icon: "📄", accent: "sky", w: 620, h: 440 },
   { id: "picks", name: "picks", icon: "🗺️", accent: "matcha", w: 600, h: 560 },
   { id: "terminal", name: "terminal", icon: "🖥️", accent: "sky", w: 580, h: 420 },
   { id: "settings", name: "settings", icon: "⚙️", accent: "purple", w: 380, h: 440 },
@@ -139,25 +141,6 @@ export const PROJECTS: Project[] = [
     accent: "purple",
     blurb:
       "this whole desktop. a personal operating system instead of a portfolio. drag stuff around.",
-  },
-  {
-    name: "蒙特利尔长舌妇",
-    status: "on air",
-    live: true,
-    url: "#",
-    accent: "amber",
-    open: "podcast",
-    blurb:
-      "a Mandarin podcast with friends. gossip, life abroad, us cackling at our own jokes.",
-  },
-  {
-    name: "[ next experiment ]",
-    status: "incubating",
-    live: false,
-    url: "#",
-    accent: "sky",
-    blurb:
-      "whatever becomes possible that wasn’t last month. bias toward shipping, comfy being wrong.",
   },
 ];
 

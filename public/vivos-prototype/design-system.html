@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vivian's Room OS — Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,500&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Press+Start+2P&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    /* plum / dusk base */
+    --plum-950:#120c1c;
+    --plum-900:#16101f;
+    --plum-800:#1a1229;
+    --plum-700:#241a38;
+    --plum-600:#2f2348;
+    --plum-500:#3d2e5c;
+    --line:rgba(248,226,168,.14);
+    --line-soft:rgba(255,255,255,.08);
+    /* gold / cream signature */
+    --gold-200:#fdeec2;
+    --gold-300:#f8e2a8;
+    --gold-400:#f3d488;
+    --gold-500:#e9c46a;
+    /* warm */
+    --ember:#f0a868;
+    --ember-soft:#f4b87f;
+    /* accents */
+    --lilac:#b79cf0;
+    --rose:#f0a0c0;
+    --mint:#8fe0c0;
+    --cyan:#6fe3e0;
+    /* text */
+    --ink:#ece6f5;
+    --ink-soft:#bdb2cf;
+    --ink-mute:#8a7ea0;
+    --glow:0 0 8px rgba(248,226,168,.55), 0 0 28px rgba(248,226,168,.32);
+    --glow-soft:0 0 14px rgba(248,226,168,.22);
+    --shadow-card:0 18px 50px -20px rgba(0,0,0,.7);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1200px 700px at 18% -8%, rgba(120,86,180,.28), transparent 60%),
+      radial-gradient(900px 600px at 92% 4%, rgba(240,168,104,.12), transparent 55%),
+      var(--plum-900);
+    color:var(--ink);
+    font-family:"Newsreader",Georgia,serif;
+    font-size:18px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+  .serif{font-family:"Playfair Display",Georgia,serif}
+  .mono{font-family:"Space Mono",ui-monospace,monospace}
+  .pixel{font-family:"Press Start 2P",monospace}
+
+  /* ---------- header ---------- */
+  header.hero{padding:88px 0 56px;position:relative;overflow:hidden}
+  .kicker{
+    font-family:"Space Mono",monospace;font-size:12.5px;letter-spacing:.34em;
+    text-transform:uppercase;color:var(--gold-400);opacity:.9;margin:0 0 18px;
+  }
+  h1.title{
+    font-family:"Playfair Display",serif;font-weight:800;
+    font-size:clamp(44px,8vw,92px);line-height:.98;margin:0;letter-spacing:-.01em;
+    color:var(--gold-300);text-shadow:var(--glow);
+  }
+  .lede{max-width:680px;margin:24px 0 0;font-size:21px;color:var(--ink-soft);line-height:1.55}
+  .lede em{color:var(--gold-200);font-style:italic}
+
+  section{padding:46px 0;border-top:1px solid var(--line-soft)}
+  .eyebrow{
+    font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--ink-mute);margin:0 0 6px;
+  }
+  h2.sec{font-family:"Playfair Display",serif;font-weight:700;font-size:clamp(26px,3.6vw,40px);margin:0 0 8px;color:var(--gold-200)}
+  .sec-note{max-width:760px;color:var(--ink-soft);margin:0 0 30px}
+
+  /* ---------- audit ---------- */
+  .audit{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+  .audit .card{background:var(--plum-700);border:1px solid var(--line-soft);border-radius:16px;padding:20px 22px}
+  .audit h4{margin:0 0 8px;font-family:"Space Mono",monospace;font-size:13px;letter-spacing:.06em;color:var(--gold-400);text-transform:uppercase}
+  .audit p{margin:0;font-size:16px;color:var(--ink-soft);line-height:1.5}
+  .pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .tag{font-family:"Space Mono",monospace;font-size:11.5px;letter-spacing:.04em;padding:5px 11px;border-radius:999px;border:1px solid var(--line);color:var(--gold-300);background:rgba(248,226,168,.06)}
+
+  /* ---------- directions ---------- */
+  .dirs{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media(max-width:880px){.dirs{grid-template-columns:1fr}}
+  .dir{border-radius:20px;overflow:hidden;border:1px solid var(--line-soft);position:relative;display:flex;flex-direction:column}
+  .dir .swatch{height:128px;position:relative;display:flex;align-items:flex-end;padding:14px}
+  .dir .nm{font-family:"Playfair Display",serif;font-weight:700;font-size:24px}
+  .dir .body{padding:18px 20px 22px;background:var(--plum-700);flex:1}
+  .dir .feel{font-family:"Space Mono",monospace;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;margin:0 0 10px}
+  .dir ul{margin:0 0 14px;padding-left:18px;color:var(--ink-soft);font-size:15.5px;line-height:1.45}
+  .dir .meta{display:flex;justify-content:space-between;align-items:center;font-family:"Space Mono",monospace;font-size:11.5px;color:var(--ink-mute);border-top:1px solid var(--line-soft);padding-top:12px}
+  .rec{position:absolute;top:12px;right:12px;z-index:2;font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;background:var(--gold-300);color:var(--plum-900);font-weight:700;padding:5px 10px;border-radius:999px;box-shadow:var(--glow-soft)}
+  /* swatch backgrounds */
+  .sw-cozy{background:linear-gradient(135deg,#2a1d3f,#1a1229 70%);color:var(--gold-300)}
+  .sw-cozy .nm{text-shadow:var(--glow-soft)}
+  .sw-living{background:
+     radial-gradient(120px 90px at 78% 30%,rgba(240,168,104,.55),transparent 65%),
+     linear-gradient(135deg,#3a2747,#1c1430 75%);color:var(--gold-200)}
+  .sw-living .nm{text-shadow:var(--glow)}
+  .sw-lab{background:
+     radial-gradient(160px 120px at 80% 10%,rgba(111,227,224,.4),transparent 60%),
+     linear-gradient(135deg,#1a0f33,#0e0a1c 80%);color:#7fe9e6}
+  .sw-lab .nm{text-shadow:0 0 10px rgba(111,227,224,.7),0 0 26px rgba(183,124,240,.5)}
+  .dots{position:absolute;top:14px;left:14px;display:flex;gap:7px}
+  .dots i{width:16px;height:16px;border-radius:50%;display:block;box-shadow:0 1px 4px rgba(0,0,0,.4)}
+
+  /* ---------- tokens ---------- */
+  .swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:12px}
+  .chip{border-radius:14px;overflow:hidden;border:1px solid var(--line-soft);background:var(--plum-700)}
+  .chip .col{height:74px}
+  .chip .lab{padding:9px 11px;font-family:"Space Mono",monospace;font-size:11.5px;line-height:1.4}
+  .chip .lab b{color:var(--ink);display:block;font-weight:700}
+  .chip .lab span{color:var(--ink-mute)}
+
+  .type-list>div{padding:16px 0;border-bottom:1px solid var(--line-soft);display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 20px}
+  .type-list .role{font-family:"Space Mono",monospace;font-size:11.5px;color:var(--ink-mute);min-width:200px;letter-spacing:.04em}
+  .scalewrap{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+  .scalewrap .s{background:var(--plum-700);border:1px solid var(--line-soft);border-radius:10px;padding:10px 12px;text-align:center;font-family:"Space Mono",monospace;font-size:11px;color:var(--ink-mute)}
+  .scalewrap .s b{display:block;background:var(--gold-300);border-radius:3px;margin:0 auto 8px}
+
+  /* component gallery */
+  .gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+  .panel{background:var(--plum-700);border:1px solid var(--line-soft);border-radius:18px;padding:22px;box-shadow:var(--shadow-card)}
+  .panel h4{margin:0 0 16px;font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute)}
+  .row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+  .btn{font-family:"Space Mono",monospace;font-weight:700;font-size:14px;letter-spacing:.02em;border-radius:999px;padding:12px 22px;border:0;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease,background .2s}
+  .btn-gold{background:var(--gold-300);color:var(--plum-900);box-shadow:var(--glow-soft)}
+  .btn-gold:hover{transform:translateY(-2px);box-shadow:var(--glow)}
+  .btn-ghost{background:transparent;color:var(--gold-200);border:1px solid var(--line)}
+  .btn-ghost:hover{background:rgba(248,226,168,.08);transform:translateY(-2px)}
+  .btn-neon{background:linear-gradient(120deg,#7a3df0,#c34df0);color:#fff;box-shadow:0 0 18px rgba(160,80,240,.6)}
+  .btn-neon:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(160,80,240,.85)}
+  .field{width:100%;background:var(--plum-800);border:1px solid var(--line-soft);border-radius:12px;padding:13px 15px;color:var(--ink);font-family:"Newsreader",serif;font-size:16px}
+  .field:focus{outline:none;border-color:var(--gold-400);box-shadow:0 0 0 3px rgba(248,226,168,.18)}
+  .badge{font-family:"Space Mono",monospace;font-size:11px;padding:4px 10px;border-radius:999px;font-weight:700;letter-spacing:.04em}
+  .b-ok{background:rgba(143,224,192,.16);color:var(--mint);border:1px solid rgba(143,224,192,.4)}
+  .b-warn{background:rgba(240,168,104,.16);color:var(--ember);border:1px solid rgba(240,168,104,.4)}
+  .b-info{background:rgba(183,156,240,.16);color:var(--lilac);border:1px solid rgba(183,156,240,.4)}
+  .b-err{background:rgba(240,120,140,.16);color:#f4889a;border:1px solid rgba(240,120,140,.4)}
+  .sticker{display:inline-block;font-family:"Space Mono",monospace;font-size:13px;background:var(--gold-300);color:var(--plum-900);padding:7px 13px;border-radius:10px;font-weight:700;transform:rotate(-3deg);box-shadow:2px 3px 0 rgba(0,0,0,.3)}
+  .qa{background:var(--plum-800);border:1px solid var(--line-soft);border-radius:14px;padding:16px}
+  .qa .q{font-family:"Playfair Display",serif;color:var(--gold-200);font-size:18px;margin:0 0 6px}
+  .qa .a{margin:0;color:var(--ink-soft);font-size:15.5px}
+  .skel{height:14px;border-radius:6px;background:linear-gradient(90deg,var(--plum-600),var(--plum-500),var(--plum-600));background-size:200% 100%;animation:sh 1.4s infinite}
+  @keyframes sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
+  .footer{padding:46px 0 80px;color:var(--ink-mute);font-family:"Space Mono",monospace;font-size:13px;text-align:center;border-top:1px solid var(--line-soft)}
+  .principles{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+  .principle{background:linear-gradient(160deg,var(--plum-700),var(--plum-800));border:1px solid var(--line-soft);border-radius:16px;padding:20px}
+  .principle .n{font-family:"Press Start 2P",monospace;font-size:13px;color:var(--gold-400);margin-bottom:12px;display:block}
+  .principle p{margin:0;font-size:15.5px;color:var(--ink-soft)}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker">Design System · v0.1 · for Claude Code handoff</p>
+    <h1 class="title">Vivian's Room OS</h1>
+    <p class="lede">A cozy dusk bedroom that's secretly a <em>builder's lab</em>. Warm on the surface — matcha, candles, piano, the cat — and rewarding underneath, where curiosity gets paid in easter eggs. This is the system the redesign is built from: tokens first, then components, then pages.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">01 · What's here today</p>
+    <h2 class="sec">The audit</h2>
+    <p class="sec-note">The current site is charming but thin: one signature idea (the clickable bedroom) carrying a lot, and four inner pages that drop into a flat dark void with no shared system. We keep the soul, fix the consistency, and add life.</p>
+    <div class="audit">
+      <div class="card"><h4>The good</h4><p>The clickable dusk-bedroom is a genuinely original hero. Gold-glow serif name. Cohesive lofi art across rooms.</p></div>
+      <div class="card"><h4>The gaps</h4><p>Inner pages = flat <span class="mono">#1a1229</span> voids. One-off spacing, colors, type per page. No empty / loading / error states. Bouncing rainbow button fights the mood.</p></div>
+      <div class="card"><h4>The fix</h4><p>One token set + component kit. Each page gets its own room scene. Ambient life + easter eggs reward exploration. Calmer, classier CTA.</p></div>
+      <div class="card"><h4>Personality to surface</h4>
+        <div class="pill-row">
+          <span class="tag">vibe coding</span><span class="tag">matcha</span><span class="tag">classical piano</span><span class="tag">k-pop</span><span class="tag">badminton</span><span class="tag">gym arc</span><span class="tag">笑点很低</span><span class="tag">builder</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">02 · Pick a mood</p>
+    <h2 class="sec">Three directions</h2>
+    <p class="sec-note">Same content, same bones — three skins, switchable live in the prototype's Tweaks panel. Safe → best-fit → bold.</p>
+    <div class="dirs">
+      <div class="dir">
+        <div class="swatch sw-cozy">
+          <div class="dots"><i style="background:#1a1229"></i><i style="background:#f8e2a8"></i><i style="background:#b79cf0"></i></div>
+          <span class="nm serif">Cozy Dusk</span>
+        </div>
+        <div class="body">
+          <p class="feel" style="color:var(--gold-400)">Safe · warm · familiar</p>
+          <ul><li>Today's palette, cleaned up</li><li>Consistent cards, type, spacing</li><li>Gentle float + glow only</li></ul>
+          <div class="meta"><span>Closest to live site</span><span>complexity: low</span></div>
+        </div>
+      </div>
+      <div class="dir">
+        <span class="rec">★ recommended</span>
+        <div class="swatch sw-living">
+          <div class="dots"><i style="background:#1c1430"></i><i style="background:#f0a868"></i><i style="background:#f8e2a8"></i></div>
+          <span class="nm serif">Living Room</span>
+        </div>
+        <div class="body">
+          <p class="feel" style="color:var(--ember)">Alive · playful · cinematic</p>
+          <ul><li>Ambient motion: twinkles, candle flicker, lamp pulse</li><li>Glowing objects + sticker labels</li><li>Per-page rooms · easter eggs · richer content</li></ul>
+          <div class="meta"><span>Best fit for you</span><span>complexity: med</span></div>
+        </div>
+      </div>
+      <div class="dir">
+        <div class="swatch sw-lab">
+          <div class="dots"><i style="background:#0e0a1c"></i><i style="background:#6fe3e0"></i><i style="background:#b79cf0"></i></div>
+          <span class="nm serif">Midnight Lab</span>
+        </div>
+        <div class="body">
+          <p class="feel" style="color:var(--cyan)">Bold · neon · future-facing</p>
+          <ul><li>Midnight base, cyan + magenta neon</li><li>Mono / pixel type, scanlines</li><li>"Personal operating system" framing</li></ul>
+          <div class="meta"><span>Rebellious side</span><span>complexity: high</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">03 · The feel in five words</p>
+    <h2 class="sec">Design principles</h2>
+    <div class="principles">
+      <div class="principle"><span class="n">01</span><p><b style="color:var(--gold-200)">Cozy, not corporate.</b> Soft light, rounded surfaces, warm serif. It should feel like her room, not a résumé.</p></div>
+      <div class="principle"><span class="n">02</span><p><b style="color:var(--gold-200)">Reward curiosity.</b> Every page hides something. Exploration is the core interaction — and her core trait.</p></div>
+      <div class="principle"><span class="n">03</span><p><b style="color:var(--gold-200)">Alive.</b> Nothing is fully still. Ambient motion makes the room breathe.</p></div>
+      <div class="principle"><span class="n">04</span><p><b style="color:var(--gold-200)">Builder underneath.</b> Mono type, a terminal note, a "currently shipping" strip — the lab beneath the cozy.</p></div>
+      <div class="principle"><span class="n">05</span><p><b style="color:var(--gold-200)">Bilingual & low-stakes.</b> 中文 sprinkled in, playful voice ("Yapping Blog"). Approachable, easy to laugh.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">04 · Tokens</p>
+    <h2 class="sec">Color</h2>
+    <p class="sec-note">Plum dusk base + cream-gold signature glow, with low-chroma accents. Bold direction swaps accents for cyan/magenta neon.</p>
+    <div class="swatches">
+      <div class="chip"><div class="col" style="background:#16101f"></div><div class="lab"><b>Plum 900</b><span>#16101f · app bg</span></div></div>
+      <div class="chip"><div class="col" style="background:#1a1229"></div><div class="lab"><b>Plum 800</b><span>#1a1229 · base</span></div></div>
+      <div class="chip"><div class="col" style="background:#241a38"></div><div class="lab"><b>Plum 700</b><span>#241a38 · surface</span></div></div>
+      <div class="chip"><div class="col" style="background:#3d2e5c"></div><div class="lab"><b>Plum 500</b><span>#3d2e5c · raised</span></div></div>
+      <div class="chip"><div class="col" style="background:#f8e2a8"></div><div class="lab"><b>Gold 300</b><span>#f8e2a8 · signature</span></div></div>
+      <div class="chip"><div class="col" style="background:#e9c46a"></div><div class="lab"><b>Gold 500</b><span>#e9c46a · deep</span></div></div>
+      <div class="chip"><div class="col" style="background:#f0a868"></div><div class="lab"><b>Ember</b><span>#f0a868 · candle</span></div></div>
+      <div class="chip"><div class="col" style="background:#b79cf0"></div><div class="lab"><b>Lilac</b><span>#b79cf0 · accent</span></div></div>
+      <div class="chip"><div class="col" style="background:#8fe0c0"></div><div class="lab"><b>Mint</b><span>#8fe0c0 · success</span></div></div>
+      <div class="chip"><div class="col" style="background:#6fe3e0"></div><div class="lab"><b>Cyan</b><span>#6fe3e0 · neon/bold</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">05 · Tokens</p>
+    <h2 class="sec">Type</h2>
+    <p class="sec-note">Four voices, each with a job: an elegant serif for display (it matches the glowing hero), a readable serif for prose, a mono for UI &amp; the builder voice, and pixel for playful easter-egg moments only.</p>
+    <div class="type-list">
+      <div><span class="role">Display — Playfair Display 800</span><span class="serif" style="font-size:40px;font-weight:800;color:var(--gold-300);text-shadow:var(--glow-soft)">Vivian Li</span></div>
+      <div><span class="role">Heading — Playfair 700</span><span class="serif" style="font-size:28px;font-weight:700;color:var(--gold-200)">Ask Me Anything</span></div>
+      <div><span class="role">Body — Newsreader 400</span><span style="font-size:18px;color:var(--ink-soft)">Here you'll find my thoughts, stories, and updates.</span></div>
+      <div><span class="role">UI / builder — Space Mono</span><span class="mono" style="font-size:15px;color:var(--gold-300)">// currently shipping: lettergen.io</span></div>
+      <div><span class="role">Playful — Press Start 2P</span><span class="pixel" style="font-size:14px;color:var(--ember)">+1 matcha</span></div>
+    </div>
+    <div class="scalewrap" style="margin-top:24px">
+      <div class="s"><b style="width:64px;height:6px"></b>4–8 · micro</div>
+      <div class="s"><b style="width:64px;height:10px"></b>12–16 · base</div>
+      <div class="s"><b style="width:64px;height:16px"></b>24–32 · gaps</div>
+      <div class="s"><b style="width:64px;height:24px"></b>48–64 · sections</div>
+      <div class="s"><b style="width:64px;height:34px"></b>96 · hero</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">06 · Kit</p>
+    <h2 class="sec">Components</h2>
+    <p class="sec-note">Built once, used everywhere — radius 8 / 14 / 18 / 999, soft shadows + the signature gold glow on anything interactive.</p>
+    <div class="gal">
+      <div class="panel"><h4>Buttons</h4>
+        <div class="row"><button class="btn btn-gold">Ask a question</button><button class="btn btn-ghost">My Github</button></div>
+        <div class="row" style="margin-top:12px"><button class="btn btn-neon">Boost (bold skin)</button></div>
+      </div>
+      <div class="panel"><h4>Inputs</h4>
+        <input class="field" placeholder="Type your question here…" />
+        <div class="row" style="margin-top:12px"><button class="btn btn-gold">Ask</button></div>
+      </div>
+      <div class="panel"><h4>Status</h4>
+        <div class="row"><span class="badge b-ok">success</span><span class="badge b-info">info</span><span class="badge b-warn">warning</span><span class="badge b-err">error</span></div>
+        <div class="row" style="margin-top:16px"><span class="sticker">click me ✦</span></div>
+      </div>
+      <div class="panel"><h4>Q&amp;A item</h4>
+        <div class="qa"><p class="q">Q: do you actually read these?</p><p class="a">A: every single one. 笑点很低 so be funny.</p></div>
+      </div>
+      <div class="panel"><h4>Loading skeleton</h4>
+        <div class="skel" style="width:70%"></div>
+        <div class="skel" style="width:100%;margin-top:10px"></div>
+        <div class="skel" style="width:45%;margin-top:10px"></div>
+      </div>
+      <div class="panel"><h4>Empty state</h4>
+        <div style="text-align:center;padding:8px 0 4px">
+          <div style="font-size:34px">🌙</div>
+          <p class="mono" style="color:var(--ink-mute);font-size:14px;margin:8px 0 0">no questions yet — be the first</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">07 · Pages</p>
+    <h2 class="sec">Page plan</h2>
+    <div class="audit">
+      <div class="card"><h4>Home · the room</h4><p>Living dusk-bedroom. Glowing clickable objects (piano, laptop, mic, window, board) + hidden easter eggs (cat, candle, matcha). Tagline + "now shipping" strip.</p></div>
+      <div class="card"><h4>Ask Me Anything</h4><p>Warm form + Q&amp;A wall. Empty / loading / error states. <span class="mono">Supabase-backed — kept as-is.</span></p></div>
+      <div class="card"><h4>Podcast</h4><p>Neon "PODCAST" room scene framing the real Spotify embed of 蒙特利尔长舌妇.</p></div>
+      <div class="card"><h4>Piano</h4><p>Clean piano-room scene + the real YouTube performances, classical + k-pop note.</p></div>
+      <div class="card"><h4>Blog · Yapping</h4><p>Keeps the playful voice; richer post cards with tags &amp; dates.</p></div>
+      <div class="card"><h4>Projects (new)</h4><p>The old bouncing button becomes a tasteful builder corner — lettergen.io + experiments.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="footer">
+  <div class="wrap">tokens &amp; components are frontend-only · no backend / schema / API changes · made to hand to Claude Code →<br/>open <b class="mono" style="color:var(--gold-300)">index.html</b> for the live prototype</div>
+</div>
+</body>
+</html>

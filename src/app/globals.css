@@ -156,7 +156,7 @@ html.night .sticky { color: #2a2208; }
 .win-ico { font-size: 14px; }
 .win-spacer { flex: 1; }
 .win-body { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: hidden; background: var(--win); }
-.about, .piano, .yap, .builds, .picks, .settings { flex: 1; min-height: 0; overflow: auto; padding: 22px; }
+.about, .piano, .yap, .builds, .share-docs, .picks, .settings { flex: 1; min-height: 0; overflow: auto; padding: 22px; }
 .ama, .podcast { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
 .term { flex: 1; min-height: 0; overflow: auto; background: #0c1018; padding: 14px; }
 
@@ -179,18 +179,10 @@ html.night .sticky { color: #2a2208; }
 .lnk.muted { color: var(--ink-mute); cursor: default; }
 
 /* about */
-.about-head { display: flex; gap: 16px; align-items: center; margin-bottom: 18px; }
-.about-av { width: 88px; height: 88px; border-radius: 18px; object-fit: cover; border: 2px solid var(--line); flex-shrink: 0; }
-.about-name { font-family: var(--font-display), sans-serif; font-weight: 800; font-size: 28px; margin: 0; letter-spacing: -.02em; }
-.about-handle { font-size: 12.5px; color: var(--ink-mute); margin: 3px 0 8px; }
-.chips { line-height: 1.2; }
-.about-bio { border-left: 3px solid var(--accent); padding-left: 16px; margin: 0 0 18px; }
-.about-bio p { margin: 0 0 10px; font-size: 16px; line-height: 1.55; color: var(--ink-soft); }
-.about-bio p:first-child { font-family: var(--font-display), sans-serif; font-weight: 600; font-size: 18px; color: var(--ink); }
-.facts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
-.fact { background: var(--canvas2); border: 1px solid var(--line-soft); border-radius: 10px; padding: 9px 12px; }
-.fact-k { display: block; font-size: 10.5px; text-transform: uppercase; letter-spacing: .1em; color: var(--accent); margin-bottom: 2px; }
-.fact-v { font-size: 13.5px; color: var(--ink-soft); line-height: 1.35; }
+.about-welcome { margin: 0 0 18px; }
+.about-welcome h2 { font-family: var(--font-display), sans-serif; font-weight: 800; font-size: 30px; margin: 0; letter-spacing: -.02em; }
+.about-chinese { margin: 4px 0 10px; font-size: 18px; color: var(--accent); font-weight: 650; }
+.about-note { margin: 0; font-size: 16px; line-height: 1.5; color: var(--ink-soft); }
 .about-cta { display: flex; gap: 10px; flex-wrap: wrap; }
 
 /* ama */
@@ -280,6 +272,16 @@ html.night .sticky { color: #2a2208; }
 }
 .proj p { margin: 0 0 12px; font-size: 13px; line-height: 1.5; color: var(--ink-soft); }
 @media (max-width: 560px) { .proj-grid, .facts { grid-template-columns: 1fr; } }
+
+/* share docs */
+.share-docs-intro { font-size: 15px; color: var(--ink-soft); line-height: 1.55; margin: 0 0 18px; }
+.share-doc-list { display: grid; gap: 12px; }
+.share-doc { position: relative; background: var(--canvas2); border: 1px solid var(--line-soft); border-radius: 12px; padding: 16px 16px 14px; overflow: hidden; }
+.share-doc::before { content: ""; position: absolute; left: 0; top: 0; width: 4px; height: 100%; background: var(--a, var(--accent)); }
+.share-doc-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 8px; }
+.share-doc-top h3 { font-family: var(--font-display), sans-serif; font-size: 17px; margin: 0; }
+.share-doc p { margin: 0 0 14px; font-size: 13.5px; line-height: 1.55; color: var(--ink-soft); }
+.share-doc-links { display: flex; gap: 14px; flex-wrap: wrap; }
 
 /* ============ PICKS ============ */
 .picks-tabs { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
