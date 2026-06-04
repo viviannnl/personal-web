@@ -4,6 +4,7 @@ import path from "node:path";
 const root = process.cwd();
 const requiredFiles = [
   "public/ai-workflows/code-change-workflow-presentation.html",
+  "public/ai-workflows/claude-design-redesign-workflow-presentation.html",
   "src/os/apps/ShareDocsApp.tsx",
 ];
 
@@ -48,6 +49,8 @@ const app = fs.readFileSync(path.join(root, "src/os/apps/ShareDocsApp.tsx"), "ut
 for (const expected of [
   "/ai-workflows/code-change-workflow-presentation.html",
   "https://github.com/viviannnl/ai-workflows/blob/main/code-change-workflow.md",
+  "/ai-workflows/claude-design-redesign-workflow-presentation.html",
+  "https://github.com/viviannnl/redesign-workflow",
 ]) {
   if (!app.includes(expected)) {
     throw new Error(`ShareDocsApp.tsx is missing ${expected}`);
@@ -60,12 +63,27 @@ if (app.includes(oldPersonalWebMarkdownUrl)) {
   throw new Error("ShareDocsApp.tsx still links to the old personal-web markdown URL");
 }
 
-const html = fs.readFileSync(
+const codeChangeHtml = fs.readFileSync(
   path.join(root, "public/ai-workflows/code-change-workflow-presentation.html"),
   "utf8",
 );
-if (!html.includes("Code Change Workflow") || !html.includes("Verification")) {
+if (!codeChangeHtml.includes("Code Change Workflow") || !codeChangeHtml.includes("Verification")) {
   throw new Error("Presentation HTML does not look like the code-change workflow artifact");
+}
+
+const redesignHtml = fs.readFileSync(
+  path.join(root, "public/ai-workflows/claude-design-redesign-workflow-presentation.html"),
+  "utf8",
+);
+for (const expected of [
+  "Claude Design → Claude Code Redesign Workflow",
+  "Claude Design → Claude Code 重设计工作流",
+  "Download the Claude Design ZIP",
+  "下载 Claude Design ZIP",
+]) {
+  if (!redesignHtml.includes(expected)) {
+    throw new Error(`Redesign workflow presentation HTML is missing ${expected}`);
+  }
 }
 
 console.log("AI workflow share artifacts verified");

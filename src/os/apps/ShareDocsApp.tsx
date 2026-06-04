@@ -16,6 +16,23 @@ const SHARE_DOCS = [
       },
     ],
   },
+  {
+    title: "Claude Design → Claude Code Redesign Workflow",
+    status: "public",
+    accent: "sky",
+    blurb:
+      "A two-prompt redesign workflow: use Claude Design for taste and product-fit UX, then Claude Code for safe implementation and browser-verified PRs.",
+    links: [
+      {
+        label: "open presentation ↗",
+        href: "/ai-workflows/claude-design-redesign-workflow-presentation.html",
+      },
+      {
+        label: "github repo ↗",
+        href: "https://github.com/viviannnl/redesign-workflow",
+      },
+    ],
+  },
 ];
 
 export default function ShareDocsApp() {

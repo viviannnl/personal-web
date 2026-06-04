@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Claude Design → Claude Code Redesign Workflow｜Claude Design 到 Claude Code 重设计工作流</title>
+  <style>
+    * { box-sizing: border-box; }
+    :root {
+      --bg: #f6f2ea;
+      --paper: #fffaf2;
+      --ink: #172033;
+      --muted: #657084;
+      --line: #e8dbc9;
+      --accent: #7c3aed;
+      --accent-2: #0891b2;
+      --accent-3: #d97706;
+      --soft-purple: #f2ecff;
+      --soft-blue: #eaf8fb;
+      --soft-amber: #fff6df;
+      --soft-green: #edfdf7;
+      --shadow: 0 28px 80px rgba(58, 35, 18, 0.15);
+      --radius-xl: 32px;
+      --radius: 20px;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 10% 7%, rgba(124, 58, 237, 0.20), transparent 31%),
+        radial-gradient(circle at 90% 12%, rgba(8, 145, 178, 0.17), transparent 27%),
+        linear-gradient(135deg, #fbf1e5 0%, #f7f3ee 48%, #edf7fb 100%);
+      line-height: 1.6;
+    }
+    .page { width: min(1180px, calc(100% - 40px)); margin: 0 auto; padding: 36px 0 70px; }
+    .print-note {
+      width: fit-content; margin: 0 0 18px auto; background: #111827; color: #fff;
+      padding: 12px 14px; border-radius: 999px; box-shadow: 0 14px 32px rgba(31, 41, 55, 0.16);
+      font-size: 13px; font-weight: 750;
+    }
+    .hero, .section-card {
+      border: 1px solid rgba(232, 219, 201, 0.9);
+      background: rgba(255, 250, 242, 0.88);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+    }
+    .hero { position: relative; overflow: hidden; padding: 52px; backdrop-filter: blur(18px); }
+    .hero::after {
+      content: ""; position: absolute; inset: auto -80px -120px auto; width: 360px; height: 360px;
+      border-radius: 999px; background: linear-gradient(135deg, rgba(124, 58, 237, 0.24), rgba(8, 145, 178, 0.14)); filter: blur(6px);
+    }
+    .eyebrow {
+      display: inline-flex; gap: 10px; align-items: center; padding: 8px 14px; border: 1px solid var(--line);
+      background: #fff; color: var(--accent); border-radius: 999px; font-size: 14px; font-weight: 850;
+      letter-spacing: .04em; text-transform: uppercase;
+    }
+    h1 { margin: 22px 0 12px; font-size: clamp(38px, 6vw, 76px); line-height: .98; letter-spacing: -0.06em; max-width: 1000px; }
+    .cn-title { display: block; margin-top: 14px; color: var(--accent); letter-spacing: -0.035em; }
+    .hero p { max-width: 850px; font-size: 21px; color: #374151; margin: 22px 0 0; }
+    .rule {
+      display: grid; grid-template-columns: 76px 1fr; gap: 20px; align-items: start; margin-top: 34px; padding: 24px;
+      border-radius: 24px; background: #111827; color: #fff; max-width: 910px; position: relative; z-index: 1;
+    }
+    .badge {
+      width: 76px; height: 76px; border-radius: 22px; display: grid; place-items: center;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2)); font-size: 28px; font-weight: 950;
+    }
+    .rule strong { color: #ddd6fe; }
+    .rule p { color: #f9fafb; font-size: 20px; margin: 0; }
+    .nav { display: flex; flex-wrap: wrap; gap: 10px; margin: 24px 0 0; position: relative; z-index: 1; }
+    .nav a {
+      text-decoration: none; color: #374151; background: rgba(255,255,255,0.76); border: 1px solid var(--line);
+      padding: 10px 14px; border-radius: 999px; font-weight: 750; transition: transform .18s ease, background .18s ease;
+    }
+    .nav a:hover { transform: translateY(-2px); background: #fff; }
+    section { margin-top: 28px; }
+    .section-card { padding: 34px; box-shadow: 0 18px 55px rgba(58, 35, 18, 0.08); }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 24px; border-bottom: 1px solid var(--line); padding-bottom: 18px; }
+    h2 { margin: 0; font-size: clamp(28px, 3.3vw, 44px); line-height: 1.05; letter-spacing: -0.04em; }
+    .translation { color: var(--accent); }
+    .section-head p { color: var(--muted); margin: 0; max-width: 430px; }
+    .grid { display: grid; gap: 18px; }
+    .grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .card {
+      background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; min-height: 100%;
+      box-shadow: 0 12px 30px rgba(31, 41, 55, 0.05);
+    }
+    .card h3 { margin: 0 0 10px; font-size: 21px; line-height: 1.2; letter-spacing: -0.02em; }
+    .card p { margin: 0; color: #4b5563; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 8px; padding: 7px 11px; border-radius: 999px;
+      background: var(--soft-purple); color: var(--accent); font-weight: 850; font-size: 13px; margin-bottom: 13px;
+    }
+    .pill.blue { background: var(--soft-blue); color: var(--accent-2); }
+    .pill.amber { background: var(--soft-amber); color: var(--accent-3); }
+    .pill.green { background: var(--soft-green); color: #0f766e; }
+    .timeline { display: grid; gap: 12px; counter-reset: steps; }
+    .step {
+      counter-increment: steps; display: grid; grid-template-columns: 58px 1fr; gap: 16px; align-items: start;
+      background: #fff; border: 1px solid var(--line); border-radius: 22px; padding: 18px;
+    }
+    .step::before {
+      content: counter(steps); width: 46px; height: 46px; display: grid; place-items: center; border-radius: 16px;
+      color: #fff; background: linear-gradient(135deg, #111827, #334155); font-weight: 950; font-size: 20px;
+    }
+    .step h3 { margin: 0 0 4px; font-size: 20px; }
+    .step p { margin: 0; color: #4b5563; }
+    .flow { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    .flow span { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 12px 14px; font-weight: 850; }
+    .flow b { color: var(--accent); }
+    .arrow { color: var(--muted); font-weight: 950; }
+    .checklist { columns: 2; column-gap: 26px; padding: 0; margin: 0; list-style: none; }
+    .checklist li {
+      break-inside: avoid; margin: 0 0 11px; padding: 13px 14px 13px 42px; border-radius: 15px;
+      border: 1px solid var(--line); background: #fff; position: relative; color: #374151;
+    }
+    .checklist li::before { content: "✓"; position: absolute; left: 14px; top: 11px; color: #0f766e; font-weight: 950; }
+    .mini-list { margin: 12px 0 0; padding-left: 20px; color: #4b5563; }
+    .mini-list li { margin: 7px 0; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; background: #111827; color: #fef3c7; padding: 3px 7px; border-radius: 7px; font-size: .92em; }
+    .quote { font-size: 24px; line-height: 1.25; font-weight: 950; letter-spacing: -0.03em; padding: 26px; border-radius: 24px; background: linear-gradient(135deg, #111827, #263244); color: #fff; }
+    .quote small { display: block; margin-top: 12px; color: #cbd5e1; font-size: 16px; font-weight: 650; letter-spacing: 0; }
+    .footer { text-align: center; color: var(--muted); margin-top: 30px; font-weight: 750; }
+    @media (max-width: 820px) {
+      .page { width: min(100% - 24px, 1180px); padding-top: 18px; }
+      .hero, .section-card { padding: 24px; border-radius: 24px; }
+      .rule { grid-template-columns: 1fr; }
+      .grid.two, .grid.three { grid-template-columns: 1fr; }
+      .section-head { display: block; }
+      .section-head p { margin-top: 10px; }
+      .checklist { columns: 1; }
+      .print-note { display: none; }
+    }
+    @media print {
+      body { background: white; }
+      .page { width: 100%; padding: 0; }
+      .hero, .section-card { box-shadow: none; break-inside: avoid; background: white; }
+      .print-note, .nav { display: none; }
+      section { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="print-note">⌘P / Ctrl+P → present or export PDF｜演示或导出 PDF</div>
+  <main class="page">
+    <header class="hero">
+      <div class="eyebrow">Public Workflow Summary｜公开工作流总结</div>
+      <h1>Claude Design → Claude Code Redesign Workflow <span class="cn-title">Claude Design → Claude Code 重设计工作流</span></h1>
+      <p>
+        A two-prompt workflow for redesigning an existing production app with AI while keeping product logic safe. 中文：这是一个双提示词流程，用 AI 重设计已有产品，同时保护后端逻辑、权限、计费和核心功能不被误改。
+      </p>
+      <div class="rule">
+        <div class="badge">2×</div>
+        <p><strong>Core split｜核心拆分：</strong> Claude Design explores taste, product-fit UX, visual direction, tokens, components, and page plans. Claude Code implements the approved design in the real repo with tests, build checks, browser comparison, and a PR. 中文：Claude Design 负责设计判断；Claude Code 负责安全落地。</p>
+      </div>
+      <nav class="nav">
+        <a href="#why">Why split｜为什么拆分</a>
+        <a href="#files">Files｜文件</a>
+        <a href="#workflow">Workflow｜流程</a>
+        <a href="#style">Style direction｜风格方向</a>
+        <a href="#verify">Verification｜验证</a>
+      </nav>
+    </header>
+
+    <section id="why" class="section-card">
+      <div class="section-head">
+        <h2>Why This Workflow Exists <span class="translation">｜为什么需要这个流程</span></h2>
+        <p>Good AI redesign needs taste and safety. 中文：好的 AI 重设计既要有审美判断，也要保护产品逻辑。</p>
+      </div>
+      <div class="grid three">
+        <div class="card"><div class="pill">Design first｜先设计</div><h3>Do not let implementation choose the taste｜不要让实现阶段决定审美</h3><p>Claude Design should audit the current UI, explore directions, and define the design system before code changes begin. 中文：先让 Claude Design 做审美和结构判断，再进入代码实现。</p></div>
+        <div class="card"><div class="pill blue">Preserve behavior｜保护行为</div><h3>Redesign is not a product rewrite｜重设计不是重写产品</h3><p>The app should keep its backend/API/auth/billing/product behavior unless the user explicitly approves product changes. 中文：没有明确批准，就不要改变后端、接口、权限、计费或核心流程。</p></div>
+        <div class="card"><div class="pill amber">Verify visually｜视觉验证</div><h3>Code review is not enough｜只看代码不够</h3><p>Claude Code must open the rendered app, compare it against the approved design export, test responsive states, and check console errors. 中文：必须看真实页面效果，而不只是读代码。</p></div>
+      </div>
+    </section>
+
+    <section id="files" class="section-card">
+      <div class="section-head">
+        <h2>The Repository Files <span class="translation">｜GitHub 仓库里的文件</span></h2>
+        <p>Each file has a distinct role so users do not have to invent the process every time. 中文：每个文件各司其职，让用户不用每次重新组织流程。</p>
+      </div>
+      <div class="grid two">
+        <div class="card"><div class="pill">redesign-prompt.md</div><h3>Claude Design prompt｜给 Claude Design 的提示词</h3><p>Audits the existing app, proposes creative directions, defines the design system, specifies components, plans pages, and produces a redesign-specific <code>HANDOFF.md</code>. 中文：负责探索、设计系统、组件和页面计划。</p></div>
+        <div class="card"><div class="pill blue">redesign-handoff.md</div><h3>Claude Code handoff｜给 Claude Code 的交接提示词</h3><p>Implements the approved design in the real app while preserving behavior, working on a branch, verifying with lint/typecheck/build, and opening a PR. 中文：负责在真实仓库安全实现。</p></div>
+        <div class="card"><div class="pill amber">claude-code/commands/redesign.md</div><h3>Optional /redesign command｜可选 /redesign 命令</h3><p>Install it into <code>.claude/commands/redesign.md</code> so the handoff can be reused without pasting the full prompt every time. 中文：安装后可直接运行命令。</p></div>
+        <div class="card"><div class="pill green">design-inspiration/</div><h3>Reference material｜设计参考资料</h3><p>A place for screenshots, links, notes, and style preferences. References are for principles, not copying another product exactly. 中文：参考是为了描述原则，不是复制别人。</p></div>
+      </div>
+    </section>
+
+    <section id="workflow" class="section-card">
+      <div class="section-head">
+        <h2>The 6-Step Workflow <span class="translation">｜6 步工作流</span></h2>
+        <p>Start with context, end with a verified redesign branch and PR. 中文：从整理上下文开始，到完成已验证的重设计分支和 PR。</p>
+      </div>
+      <div class="timeline">
+        <div class="step"><div><h3>Prepare app context｜准备产品上下文</h3><p>Collect the app repo link, current screenshots, pain points, inspiration, and constraints Claude must preserve. 中文：准备仓库、截图、问题、参考和不能破坏的限制。</p></div></div>
+        <div class="step"><div><h3>Run Claude Design｜运行 Claude Design</h3><p>Use <code>redesign-prompt.md</code> to audit the app, explore style directions, define tokens/components, and create a page-by-page redesign plan. 中文：先做审美、结构和体验设计。</p></div></div>
+        <div class="step"><div><h3>Pick or refine the direction｜选择或微调方向</h3><p>React in normal language: “warmer,” “less generic,” “more editorial,” “more serious developer tool.” 中文：用自然语言反馈风格偏好。</p></div></div>
+        <div class="step"><div><h3>Download the Claude Design ZIP｜下载 Claude Design ZIP</h3><p>Do not rely only on a share link. Download and unzip the approved design export into the app repo so Claude Code can inspect real files. 中文：不要只给分享链接，要下载并解压设计文件。</p></div></div>
+        <div class="step"><div><h3>Hand off to Claude Code｜交给 Claude Code 实现</h3><p>Use the installed <code>/redesign</code> command or <code>redesign-handoff.md</code>. Claude Code should create a redesign branch and implement tokens, components, then pages. 中文：用专门分支按阶段实现。</p></div></div>
+        <div class="step"><div><h3>Verify and open PR｜验证并开 PR</h3><p>Run checks, compare the rendered app against the design export in a browser, capture evidence when possible, push the branch, and open a PR for review. 中文：验证真实页面后再推送和开 PR。</p></div></div>
+      </div>
+    </section>
+
+    <section id="style" class="section-card">
+      <div class="section-head">
+        <h2>Choosing a Style Direction <span class="translation">｜如何选择风格方向</span></h2>
+        <p>You do not need perfect taste words upfront. 中文：一开始不需要说出完美的风格词。</p>
+      </div>
+      <div class="grid three">
+        <div class="card"><div class="pill">1</div><h3>Evolutionary｜渐进型</h3><p>Improves the current product while still changing layout and hierarchy meaningfully. 中文：保留熟悉感，但明显改善结构和层级。</p></div>
+        <div class="card"><div class="pill blue">2</div><h3>Strong-fit bold｜强匹配大胆型</h3><p>The best balanced recommendation for the product name, audience, workflow, and desired style. 中文：最适合产品定位和用户场景的大胆版本。</p></div>
+        <div class="card"><div class="pill amber">3</div><h3>Revolutionary｜突破型</h3><p>More distinctive and opinionated; changes composition, interaction patterns, and storytelling while preserving behavior. 中文：更有记忆点，但仍保护产品功能。</p></div>
+      </div>
+      <div class="quote" style="margin-top:18px;">
+        A redesign should improve how the product feels, reads, and works — not only its colors.
+        <small>中文：重设计应该改善产品的感受、理解和使用方式，而不只是换颜色。</small>
+      </div>
+    </section>
+
+    <section id="verify" class="section-card">
+      <div class="section-head">
+        <h2>Claude Code Verification Checklist <span class="translation">｜Claude Code 验证清单</span></h2>
+        <p>The implementation is not done until the real app is checked. 中文：真实页面验证之前，不要说完成。</p>
+      </div>
+      <ul class="checklist">
+        <li>Approved Claude Design export is local｜已把批准的设计导出放到本地</li>
+        <li><code>HANDOFF.md</code> checked if present｜如有 HANDOFF.md，已读取</li>
+        <li>Dedicated redesign branch created｜已创建专门重设计分支</li>
+        <li>Backend/API/auth/billing behavior preserved｜后端、接口、权限、计费行为保持不变</li>
+        <li>Tokens and shared components implemented before pages｜先实现设计变量和共享组件</li>
+        <li>Lint, typecheck, and build pass or caveats documented｜规范、类型和构建通过，或记录限制</li>
+        <li>Rendered app opened in a browser｜已在浏览器打开真实应用</li>
+        <li>Actual UI compared against the design export｜已对照设计导出检查视觉还原</li>
+        <li>Responsive states checked｜已检查响应式状态</li>
+        <li>Browser console checked｜已检查浏览器控制台</li>
+        <li>Screenshots or recording captured when available｜可行时已截图或录屏</li>
+        <li>Branch pushed and PR opened for human review｜已推送分支并开 PR 供人工审查</li>
+      </ul>
+    </section>
+
+    <section class="section-card">
+      <div class="section-head">
+        <h2>Beginner-Friendly Mental Model <span class="translation">｜给新手的理解方式</span></h2>
+        <p>Think of this as a relay race, not one giant prompt. 中文：把它当作接力赛，而不是一个超长提示词。</p>
+      </div>
+      <div class="flow">
+        <span><b>Context｜上下文</b></span><span class="arrow">→</span>
+        <span><b>Claude Design｜设计探索</b></span><span class="arrow">→</span>
+        <span><b>Approved ZIP｜批准的设计包</b></span><span class="arrow">→</span>
+        <span><b>Claude Code｜代码实现</b></span><span class="arrow">→</span>
+        <span><b>PR Review｜PR 审查</b></span>
+      </div>
+      <div class="grid two" style="margin-top:18px;">
+        <div class="card"><div class="pill green">Good handoff｜好的交接</div><h3>Local files beat share links｜本地文件优于分享链接</h3><p>A downloaded ZIP gives Claude Code real artifacts to inspect, compare, and reference. 中文：下载文件后，Claude Code 才能可靠读取和对照。</p></div>
+        <div class="card"><div class="pill amber">Safety rule｜安全规则</div><h3>Visual change, product-safe｜视觉改变，产品安全</h3><p>Keep important flows, permissions, errors, legal content, and destructive actions visible and working. 中文：重要流程、权限、错误、法律内容和危险操作不能被隐藏或破坏。</p></div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      Claude Design → Claude Code Redesign Workflow｜Claude Design → Claude Code 重设计工作流 · Designed for clear presentation｜为清晰演示而设计
+    </footer>
+  </main>
+</body>
+</html>
