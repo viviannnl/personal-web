@@ -56,8 +56,8 @@ export default function ShareDocsApp() {
   return (
     <div className="share-docs">
       <p className="share-docs-intro">
-        AI workflow notes and artifacts I’m making shareable for people who ask
-        how I actually ship with agents.
+        AI workflows and skills I’m making shareable for people who ask how I
+        actually ship with agents.
       </p>
 
       <div className="share-doc-list">
