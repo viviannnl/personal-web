@@ -33,6 +33,23 @@ const SHARE_DOCS = [
       },
     ],
   },
+  {
+    title: "vibe-ui — Claude Code Skill",
+    status: "public",
+    accent: "matcha",
+    blurb:
+      "A skill that stops agent-built UI from looking agent-built: a drop-in token contract, ~45 named anti-patterns, required state matrices, and motion specs with real numbers. Validated against a before/after fixture with behavior held identical — 47 accessibility violations to zero.",
+    links: [
+      {
+        label: "github repo ↗",
+        href: "https://github.com/viviannnl/vibe-ui",
+      },
+      {
+        label: "before/after report ↗",
+        href: "https://github.com/viviannnl/vibe-ui/blob/main/bench/results/report.md",
+      },
+    ],
+  },
 ];
 
 export default function ShareDocsApp() {
