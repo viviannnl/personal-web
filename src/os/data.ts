@@ -134,6 +134,15 @@ export const PROJECTS: Project[] = [
       "cover letters that don’t read like a robot wrote them (irony noted). my answer to the job-hunt grind.",
   },
   {
+    name: "free second-hand stuff map — vancouver",
+    status: "shipped",
+    live: true,
+    url: "https://craigslistmap.lettergen.io/",
+    accent: "matcha",
+    blurb:
+      "a live treasure map of free stuff on vancouver craigslist. someone’s curb is someone else’s find.",
+  },
+  {
     name: "moonlit sanctuary · 月影圣所",
     status: "shipped",
     live: true,
