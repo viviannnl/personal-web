@@ -134,6 +134,15 @@ export const PROJECTS: Project[] = [
       "cover letters that don’t read like a robot wrote them (irony noted). my answer to the job-hunt grind.",
   },
   {
+    name: "moonlit sanctuary · 月影圣所",
+    status: "shipped",
+    live: true,
+    url: "https://fortune.lettergen.io/",
+    accent: "purple",
+    blurb:
+      "a moonlit 3d garden for tarot and 八字. the moon shows tonight’s real phase, the flowers change with the solar terms, and your wish lanterns never leave your browser.",
+  },
+  {
     name: "VivOS",
     status: "you’re in it",
     live: true,
